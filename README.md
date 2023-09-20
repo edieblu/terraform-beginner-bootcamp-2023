@@ -126,3 +126,7 @@ Then we can add the token to our gitpod environment by running `gp env TF_CLOUD_
 We can also add it to our bash environment by running `export TF_CLOUD_TOKEN=<token>`.
 
 Don't forget to update the `.gitpod.yml` file to run the token generator script.
+
+## Alias
+
+Add a `tf` alias to your `.bash_profile` using a bash script from our `bin` folder, see [`./bin/bash_alias`](./bin/bash_alias).
