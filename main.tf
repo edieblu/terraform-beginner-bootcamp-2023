@@ -1,4 +1,12 @@
 terraform {
+
+  cloud {
+    organization = "includeJS"
+
+    workspaces {
+      name = "terra-house-1"
+    }
+  }
   required_providers {
     random = {
       source  = "hashicorp/random"
@@ -10,6 +18,7 @@ terraform {
       version = "5.17.0"
     }
   }
+
 }
 provider "aws" {
   # Configuration options
