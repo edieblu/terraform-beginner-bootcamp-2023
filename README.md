@@ -1,6 +1,6 @@
 # Terraform Beginner Bootcamp 2023
 
-## Semantic Versioning
+## Semantic Versioning 🦄
 
 Given a version number **MAJOR.MINOR.PATCH** (e.g. `1.0.1`), increment the:
 
