@@ -97,3 +97,13 @@ To only output the value of our `random_bucket_name`, run `terraform output rand
 `terraform_tfstate` file is used to store the state of our infrastructure. It's a JSON file that contains the metadata of our resources. (should be added to `.gitignore` file)
 
 `terraform.tfstate.backup` is a backup of the previous state.
+
+## Installing additional Terraform providers
+
+Add the aws provider to the `required_providers` block in `main.tf` file.
+
+Anytime you add a new provider, you need to run `terraform init` again.
+
+Note that under the hood, Terraform is using the env variables (that we exported earlier) to authenticate with AWS.
+
+To destroy terraform resources, run `terraform destroy`. To auto approve, run `terraform destroy -auto-approve`.
