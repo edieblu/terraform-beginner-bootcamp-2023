@@ -23,7 +23,7 @@ Instructions [here](https://developer.hashicorp.com/terraform/tutorials/aws-get-
   `chmod u+x <script_name>`
 - use `before` instead of `init` hook, check [GitPod tasks](https://www.gitpod.io/docs/configure/workspaces/tasks), in short, `init` will not re-run if we restart an existing workspace, `before` will.
 
-The new file is located here: [./bin/install-terraform.sh](./bin/install-terraform.sh)
+The installation file is located here: [`./bin/install_teffaform_cli`](./bin/install_terraform_cli)
 
 ## Env
 List and filter (`grep`) env variables:
@@ -43,3 +43,19 @@ gp env HELLO='world'
 ```
 All future workspaces launched will also have access.
 You can also set it inside `.gitpod.yml` file (but only good for non-sensitive en vars).
+
+## Installing AWS CLI
+Installed via a bash script. The file is located here: [`./bin/install_aws_cli`](./bin/install_aws_cli)
+AWS CLI installation instructions [here](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html).
+
+Verify that AWS CLI is installed by running `aws` which will open up a prompt, then run a test command like:
+```bash
+aws sts get-caller-identity
+```
+This will error until all the necessary env variables are set.
+
+Only use `aws configure` wizard on your local machine. In a cloud environment use [env vars](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html) instead.
+
+Once you've set the necessary variables (using `gp env`) test the above function again. If succesful, it should return a `json` payload.
+
+> Avoid pushing your AWS credentials to GitHub!
