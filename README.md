@@ -24,3 +24,22 @@ Instructions [here](https://developer.hashicorp.com/terraform/tutorials/aws-get-
 - use `before` instead of `init` hook, check [GitPod tasks](https://www.gitpod.io/docs/configure/workspaces/tasks), in short, `init` will not re-run if we restart an existing workspace, `before` will.
 
 The new file is located here: [./bin/install-terraform.sh](./bin/install-terraform.sh)
+
+## Env
+List and filter (`grep`) env variables:
+`env | grep GITPOD `
+`env | grep terraform-beginner-bootcamp`
+
+### Set and retrieve a variable inside the bash file
+We can save the var inside our bash file in order to persist it through all of our future bash sessions. 
+```bash
+PROJECT_ROOT='/workspace/terraform-beginner-bootcamp-2023'
+cd $PROJECT_ROOT
+```
+
+### Persist an env variable inside gitpod
+```
+gp env HELLO='world'
+```
+All future workspaces launched will also have access.
+You can also set it inside `.gitpod.yml` file (but only good for non-sensitive en vars).
