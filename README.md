@@ -107,3 +107,15 @@ Anytime you add a new provider, you need to run `terraform init` again.
 Note that under the hood, Terraform is using the env variables (that we exported earlier) to authenticate with AWS.
 
 To destroy terraform resources, run `terraform destroy`. To auto approve, run `terraform destroy -auto-approve`.
+
+## Terraform Cloud
+
+We will use the free tier of Terraform Cloud to store our state file.
+
+A Terraform Cloud Workspace is a place where we can store our Terraform configuration files and state files.
+
+A Terraform Cloud Project is a collection of workspaces.
+
+Add the `cloud` block to `main.tf` file, then `terraform init` again and finally `terraform apply`.
+You'll first have to authenticate with Terraform Cloud using `terraform login`.
+This will open up a browser window where you can authenticate with Terraform Cloud and authorize in the CLI by pasting the generated token.
