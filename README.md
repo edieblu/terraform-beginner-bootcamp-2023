@@ -119,3 +119,10 @@ A Terraform Cloud Project is a collection of workspaces.
 Add the `cloud` block to `main.tf` file, then `terraform init` again and finally `terraform apply`.
 You'll first have to authenticate with Terraform Cloud using `terraform login`.
 This will open up a browser window where you can authenticate with Terraform Cloud and authorize in the CLI by pasting the generated token.
+
+We can automate the TF cloud token generation for our gitpod environment by adding creating a long-lived token in Terraform Cloud (30 days) and adding a generator script to our `bin` folder (see [`./bin/generate_tf_cloud_token`](./bin/generate_tf_cloud_token)).
+
+Then we can add the token to our gitpod environment by running `gp env TF_CLOUD_TOKEN=<token>`.
+We can also add it to our bash environment by running `export TF_CLOUD_TOKEN=<token>`.
+
+Don't forget to update the `.gitpod.yml` file to run the token generator script.
