@@ -21,7 +21,19 @@ terraform {
 
 }
 provider "aws" {
-  # Configuration options
+  region = "eu-west-2"
+}
+
+variable "AWS_ACCESS_KEY_ID" {
+  description = ""
+  type        = string
+  default     = ""
+}
+
+variable "AWS_SECRET_ACCESS_KEY" {
+  description = ""
+  type        = string
+  default     = ""
 }
 
 provider "random" {
