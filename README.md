@@ -40,6 +40,13 @@ PROJECT_ROOT='/workspace/terraform-beginner-bootcamp-2023'
 cd $PROJECT_ROOT
 ```
 
+We can also `export` variables to our bash environment.
+
+```bash
+export PROJECT_ROOT='/workspace/terraform-beginner-bootcamp-2023'
+```
+
+To remove the variable from our bash environment, run `unset PROJECT_ROOT`.
 ### Persist an env variable inside gitpod
 
 ```bash
@@ -48,6 +55,7 @@ gp env HELLO='world'
 
 All future workspaces launched will also have access.
 You can also set it inside `.gitpod.yml` file (but only good for non-sensitive en vars).
+To unset a variable, run `gp env -u HELLO`.
 
 ## Installing AWS CLI
 
@@ -126,6 +134,32 @@ Then we can add the token to our gitpod environment by running `gp env TF_CLOUD_
 We can also add it to our bash environment by running `export TF_CLOUD_TOKEN=<token>`.
 
 Don't forget to update the `.gitpod.yml` file to run the token generator script.
+
+### Terraform Variables
+
+You'll need to add the AWS auth variables to Terraform Cloud as well (make sure to use the `sensitive` flag for the secret key).
+
+The region can be set in the `main.tf` file.
+
+To avoid the warning when running `terraform plan`, initialise the AWS variables inside `main.tf` file.
+
+```terraform
+provider "aws" {
+  region = "eu-west-2"
+}
+
+variable "AWS_ACCESS_KEY_ID" {
+  description = ""
+  type        = string
+  default     = ""
+}
+
+variable "AWS_SECRET_ACCESS_KEY" {
+  description = ""
+  type        = string
+  default     = ""
+}
+```
 
 ## Alias
 
