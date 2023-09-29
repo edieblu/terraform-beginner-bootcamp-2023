@@ -107,6 +107,8 @@ We'll be using the [random provider](https://registry.terraform.io/providers/has
 
 ### Terraform CLI
 
+![Alt text](assets/terraform_lifecycle.jpg.jpg)
+
 Type `terraform` to see all the available commands.
 
 `terraform init` - initialize a working directory containing Terraform configuration files (`.tf` files and `.terraform.lock.hcl` file)
