@@ -70,3 +70,44 @@ import {
 ```
 
 We needed to manually import these resources because we created them outside of TF Cloud (we deleted out state file when migrating from cloud back to local). This is called configuration drift. Note: not all resources support `import`.
+
+## Terraform Refresh
+Use `terraform apply -refresh-only -auto-approve` to refresh the state file without making any changes to the infrastructure.
+
+## Modules
+
+The modules should be stored in the `./modules` directory and sourced from the `main.tf` file.
+
+### Module Sources
+
+Documentation [here](https://developer.hashicorp.com/terraform/language/modules/sources).
+
+Modules can be sourced from local paths, GitHub, Terraform Registry, etc. Make sure to pass in the required variables when using a module.
+
+Example with local source:
+
+```bash
+module "s3_bucket" {
+  source = "./modules/s3_bucket"
+  user_uuid   = var.user_uuid
+  bucket_name = var.bucket_name
+}
+```
+
+### Module Varibles
+
+Note that even if the module has a `variables.tf` file, you still need to reference those variables in the root level `variables.tf` file.
+
+```bash
+variable "user_uuid" {
+  type        = string
+}
+
+```
+
+```bash
+output "bucket_name" {
+  value       = module.terrahouse_aws.bucket_name
+  description = "name of the bucket"
+}
+```
