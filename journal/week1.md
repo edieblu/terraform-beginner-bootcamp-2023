@@ -51,3 +51,22 @@ user_uuid = "73abc949-c183-4c61-bda6-a724952ec87d"
 Since `terraform.tfvars` won't be commited to GH, we can copy the `terraform.tfvars.example` and create a `terraform.tfvars` file with the same content on worskpace creation.
 
 You can also use `auto.tfvars` to automatically load variables. This file is loaded first, then `terraform.tfvars` and then `*.auto.tfvars` in alphabetical order.
+
+## TF Imports and Dealing with Configuration Drift
+
+You can import existing resources into your TF state file using the `terraform import` [command](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#import).
+
+```bash
+terraform import aws_s3_bucket.bucket bucket-name
+```
+
+You can also do it by using an `import` block inside the module.
+
+```bash
+import {
+  to = aws_s3_bucket.bucket
+  id = "bucket-name"
+}
+```
+
+We needed to manually import these resources because we created them outside of TF Cloud (we deleted out state file when migrating from cloud back to local). This is called configuration drift. Note: not all resources support `import`.
