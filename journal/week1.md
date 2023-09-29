@@ -162,3 +162,9 @@ resource "aws_s3_object" "index_file" {
 We'll be using a function called `fileexists` to check if a file exists. More docs [here](https://developer.hashicorp.com/terraform/language/functions/fileexists).
 
 Don't forget to add the variables in the main `variables.tf`, as well as `terraform.tfvars` file and passing them into the `main.tf` file.
+
+## CDN with CloudFront
+
+We'll be using the `aws_cloudfront_distribution` resource to create a CDN. More docs [here](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudfront_distribution).
+
+And more on [OAC resource](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudfront_origin_access_control), bucket policy resource [here](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_policy).
