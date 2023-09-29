@@ -72,6 +72,7 @@ import {
 We needed to manually import these resources because we created them outside of TF Cloud (we deleted out state file when migrating from cloud back to local). This is called configuration drift. Note: not all resources support `import`.
 
 ## Terraform Refresh
+
 Use `terraform apply -refresh-only -auto-approve` to refresh the state file without making any changes to the infrastructure.
 
 ## Modules
@@ -111,3 +112,53 @@ output "bucket_name" {
   description = "name of the bucket"
 }
 ```
+
+## S3 Provider for Static Website Hosting
+
+We'll be using the `aws_s3_bucket_website_configuration` resource to configure our bucket for static website hosting.
+
+Documentation [here](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_website_configuration)
+
+### Uploading Files to S3
+
+Documentation [here](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_object.)
+
+### TerraForm Path
+
+In Terraform there's a special path called `path.module` that points to the root directory of the module. This is useful when you want to reference files inside the module.
+
+For example, if you want to reference a file called `index.html` inside the `./modules/s3_bucket` directory, you can do it like this:
+
+```bash
+source = "${path.module}/index.html"
+```
+
+Documentation [here](https://developer.hashicorp.com/terraform/language/expressions/references#filesystem-and-workspace-info)
+
+### TerraForm Console
+
+You can use the `terraform console` command to test out expressions. For example:
+
+```bash
+path.root
+```
+
+### Etags
+
+An etag is a hash of the object. It's used to determine if the object has changed. If the etag is different, then the object has changed. More docs [here](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/ETag) and in TF docs [here](https://developer.hashicorp.com/terraform/language/functions/filemd5).
+
+```bash
+resource "aws_s3_object" "index_file" {
+  bucket = aws_s3_bucket.website_bucket.bucket
+  key    = "index.html"
+  source = var.index_html_filepath
+
+  etag = filemd5(var.index_html_filepath)
+}
+```
+
+### TF Built-in Functions
+
+We'll be using a function called `fileexists` to check if a file exists. More docs [here](https://developer.hashicorp.com/terraform/language/functions/fileexists).
+
+Don't forget to add the variables in the main `variables.tf`, as well as `terraform.tfvars` file and passing them into the `main.tf` file.
