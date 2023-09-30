@@ -8,7 +8,7 @@ resource "aws_cloudfront_origin_access_control" "default" {
   signing_protocol                  = "sigv4"
 }
 
-local = {
+locals {
   s3_origin_id = "myS3Origin"
 }
 

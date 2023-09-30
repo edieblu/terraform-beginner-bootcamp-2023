@@ -168,3 +168,27 @@ Don't forget to add the variables in the main `variables.tf`, as well as `terraf
 We'll be using the `aws_cloudfront_distribution` resource to create a CDN. More docs [here](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudfront_distribution).
 
 And more on [OAC resource](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudfront_origin_access_control), bucket policy resource [here](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_policy).
+
+[Here](https://aws.amazon.com/blogs/networking-and-content-delivery/amazon-cloudfront-introduces-origin-access-control-oac/) for CloudFront bucket policy.
+
+Note that you will need to replace the colon inside the bucket policy json with equal sign to comply with hcl syntax.
+
+## TF Data Sources
+
+Data sources are used to fetch information about existing resources. More docs [here](https://www.terraform.io/docs/language/data-sources/index.html).
+
+```bash
+data "aws_route53_zone" "terrahouse_zone" {
+  name = "terrahouse.io."
+}
+```
+
+## TF Locals
+
+Locals are used to store values that are used multiple times in the module. More docs [here](https://www.terraform.io/docs/language/values/locals.html).
+
+```bash
+locals {
+  bucket_name = "terrahouse-${var.user_uuid}"
+}
+```
