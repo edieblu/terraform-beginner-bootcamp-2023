@@ -20,18 +20,20 @@ resource "aws_s3_bucket_website_configuration" "website_configuration" {
 }
 
 resource "aws_s3_object" "index_file" {
-  bucket = aws_s3_bucket.website_bucket.bucket
-  key    = "index.html"
-  source = var.index_html_filepath
+  bucket       = aws_s3_bucket.website_bucket.bucket
+  key          = "index.html"
+  content_type = "text/html"
+  source       = var.index_html_filepath
 
   etag = filemd5(var.index_html_filepath)
 }
 
 
 resource "aws_s3_object" "error_file" {
-  bucket = aws_s3_bucket.website_bucket.bucket
-  key    = "error.html"
-  source = var.error_html_filepath
+  bucket       = aws_s3_bucket.website_bucket.bucket
+  key          = "error.html"
+  content_type = "text/html"
+  source       = var.error_html_filepath
 
   etag = filemd5(var.error_html_filepath)
 }

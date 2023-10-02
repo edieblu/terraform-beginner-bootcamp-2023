@@ -123,6 +123,8 @@ Documentation [here](https://registry.terraform.io/providers/hashicorp/aws/lates
 
 Documentation [here](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_object.)
 
+Make sure to add a `content_type` to the `aws_s3_object` resource ([docs](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_object#content_type)).
+
 ### TerraForm Path
 
 In Terraform there's a special path called `path.module` that points to the root directory of the module. This is useful when you want to reference files inside the module.
@@ -163,6 +165,8 @@ We'll be using a function called `fileexists` to check if a file exists. More do
 
 Don't forget to add the variables in the main `variables.tf`, as well as `terraform.tfvars` file and passing them into the `main.tf` file.
 
+`jsonencode` is another useful function that converts a map to a json string. More docs [here](https://www.terraform.io/docs/language/functions/jsonencode.html). We'll be using it for creating our bucket policy.
+
 ## CDN with CloudFront
 
 We'll be using the `aws_cloudfront_distribution` resource to create a CDN. More docs [here](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudfront_distribution).
@@ -192,3 +196,7 @@ locals {
   bucket_name = "terrahouse-${var.user_uuid}"
 }
 ```
+
+## CloudFront Invalidations
+
+To invalidate the CloudFront cache inside the AWS console use the `/*` wildcard to invalidate all. More docs [here](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/Invalidation.html).
