@@ -200,3 +200,19 @@ locals {
 ## CloudFront Invalidations
 
 To invalidate the CloudFront cache inside the AWS console use the `/*` wildcard to invalidate all. More docs [here](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/Invalidation.html).
+
+To prevent a change to our TF intrastructure everytime a file is changed, we'll be using resource metatag `lifecycle` to prevent the resource from being destroyed and recreated.
+
+Specifically we'll be using a resource called `terraform_data`.
+```bash
+
+## TF Resource Lifecycle
+
+More docs [here](https://www.terraform.io/docs/language/meta-arguments/lifecycle.html).
+The resource lifecyle is used to control the behavior of the resource during creation, update and deletion.
+
+```bash
+lifecycle {
+  create_before_destroy = true
+}
+```
