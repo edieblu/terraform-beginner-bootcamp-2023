@@ -52,3 +52,13 @@ variable "error_html_filepath" {
     error_message = "The specified index_html_filepath is not a valid file path."
   }
 }
+
+variable "content_version" {
+  description = "The version of the content"
+  type        = number
+
+  validation {
+    condition     = var.content_version > 0
+    error_message = "content_version must be a positive integer"
+  }
+}
