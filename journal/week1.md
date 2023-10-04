@@ -249,3 +249,46 @@ provisioner "local-exec" {
   EOT
 }
 ```
+
+## TF For Each
+
+The `for_each` meta-argument is used to create multiple instances of a resource or module. More docs [here](https://www.terraform.io/docs/language/meta-arguments/for_each.html).
+
+```bash
+resource "aws_route53_record" "www" {
+  for_each = var.domain_names
+
+  zone_id = data.aws_route53_zone.terrahouse_zone.zone_id
+  name    = each.value
+  type    = "A"
+
+  alias {
+    name                   = aws_cloudfront_distribution.terrahouse_cdn.domain_name
+    zone_id                = aws_cloudfront_distribution.terrahouse_cdn.hosted_zone_id
+    evaluate_target_health = false
+  }
+}
+```
+
+## TF Fileset
+
+The `fileset` function is used to get a list of files in a directory. More docs [here](https://www.terraform.io/docs/language/functions/fileset.html).
+
+```bash
+locals {
+  files = fileset(path.module, "public/*")
+}
+```
+
+## TF Complex types
+### Collection types
+
+- List - ordered collection of elements
+- Map - collection of elements that are accessed via a key
+- Set - unordered collection of unique elements
+
+
+### Structural types
+
+- Object - a collection of attributes grouped together
+- Tuple - a collection of elements of varying types
