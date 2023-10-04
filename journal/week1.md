@@ -216,3 +216,36 @@ lifecycle {
   create_before_destroy = true
 }
 ```
+
+## TF Provisioners
+
+### Local Exec Provisioner
+
+The local-exec provisioner invokes a local executable after a resource is created. This invokes a process on the machine running Terraform, not on the resource (more [here](https://developer.hashicorp.com/terraform/language/resources/provisioners/local-exec)).
+
+This is not a good practice, because configuration management should be done with a configuration management tool like Ansible, Chef, Puppet, etc.
+
+### Remote Exec Provisioner
+
+The remote-exec provisioner invokes a script on a remote resource after it is created. This can be used to run a configuration management tool, bootstrap into a cluster, etc. (more [here](https://www.terraform.io/docs/language/resources/provisioners/remote-exec.html)).
+
+```bash
+provisioner "remote-exec" {
+  inline = [
+    "echo 'Hello, World!' > index.html",
+    "nohup python -m SimpleHTTPServer 8080 &"
+  ]
+}
+```
+
+## TF Heredoc
+
+A heredoc is used to create a multiline string. More docs [here](https://www.terraform.io/docs/language/expressions/strings.html#heredoc-syntax).
+
+```bash
+provisioner "local-exec" {
+  command = <<-EOT
+    aws s3 sync ${path.module}/public s3://${aws_s3_bucket.website_bucket.bucket}/ --delete
+  EOT
+}
+```
