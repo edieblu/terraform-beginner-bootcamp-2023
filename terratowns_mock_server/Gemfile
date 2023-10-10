@@ -1,0 +1,9 @@
+# frozen_string_literal: true
+
+source "https://rubygems.org"
+
+gem 'sinatra' # web framework
+gem 'rake' # task runner
+gem 'pry' # debugger
+gem 'puma' # web server
+gem 'activerecord' # ORM
