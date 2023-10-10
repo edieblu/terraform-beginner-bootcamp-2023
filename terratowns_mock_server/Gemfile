@@ -2,8 +2,8 @@
 
 source "https://rubygems.org"
 
-gem 'sinatra'
-gem 'rake'
-gem 'pry'
-gem 'puma'
-gem 'activerecord'
+gem 'sinatra' // web framework
+gem 'rake' // task runner
+gem 'pry' // debugger
+gem 'puma' // web server
+gem 'activerecord' // ORM

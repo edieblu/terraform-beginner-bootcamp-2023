@@ -3,22 +3,36 @@ require 'json'
 require 'pry'
 require 'active_model'
 
+# variables that start with $ are global variables
+# you wouldn't use this in a real app, but it's fine for a mock server
 $home = {}
 
+# This is a class that represents a home
+# It's used to validate the data that comes in from the request body
+# It's also used to validate the data that comes in from the database
 class Home
   include ActiveModel::Validations
   attr_accessor :town, :name, :description, :domain_name, :content_version
 
-  validates :town, presence: true
+  validates :town, presence: true, inclusion: { in: [
+    'melomaniac-mansion',
+    'cooker-cove',
+    'video-valey',
+    'the-nomad-pad',
+    'gamers-grotto'
+  ] }
   validates :name, presence: true
   validates :description, presence: true
-  validates :domain_name, 
+  validates :domain_name,
     format: { with: /\.cloudfront\.net\z/, message: "domain must be from .cloudfront.net" }
-    # uniqueness: true, 
+    # uniqueness: true,
 
   validates :content_version, numericality: { only_integer: true }
 end
 
+# This class extends Sinatra::Base
+# It defines the routes for the mock server
+# It also defines some helper methods
 class TerraTownsMockServer < Sinatra::Base
 
   def error code, message
@@ -40,6 +54,8 @@ class TerraTownsMockServer < Sinatra::Base
   end
 
   def x_access_code
+    # in ruby the last line of a function is the return value
+    # you can also use the return keyword
     '9b49b3fb-b8e9-483c-b703-97ba88eef8e0'
   end
 
@@ -69,10 +85,13 @@ class TerraTownsMockServer < Sinatra::Base
 
   # CREATE
   post '/api/u/:user_uuid/homes' do
+    # in ruby func parens are optional
     ensure_correct_headings
     find_user_by_bearer_token
+    # puts is like console.log
     puts "# create - POST /api/homes"
 
+    # similar to try/catch
     begin
       payload = JSON.parse(request.body.read)
     rescue JSON::ParserError
@@ -92,19 +111,22 @@ class TerraTownsMockServer < Sinatra::Base
     puts "content_version #{content_version}"
     puts "town #{town}"
 
+    # Create a new home object
     home = Home.new
     home.town = town
     home.name = name
     home.description = description
     home.domain_name = domain_name
     home.content_version = content_version
-    
+
     unless home.valid?
       error 422, home.errors.messages.to_json
     end
 
     uuid = SecureRandom.uuid
     puts "uuid #{uuid}"
+    # Save the home object to the database
+    # $home is a global variable and acts as a mock database
     $home = {
       uuid: uuid,
       name: name,
@@ -185,4 +207,5 @@ class TerraTownsMockServer < Sinatra::Base
   end
 end
 
+# This is the entry point for the mock server
 TerraTownsMockServer.run!

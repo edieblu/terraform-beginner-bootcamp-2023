@@ -21,3 +21,9 @@ To make the mock server files executable, run chmod on the directory:
 ```bash
 chmod u+x bin/terratowns/*
 ```
+
+## Ruby Server with Sinatra
+
+[Sinatra](https://sinatrarb.com/) is a lightweight web framework for Ruby. We use the bundle commanda to install the gems (check the `.gitpod` file). Bundle exec is used to run the server.
+
+All of the code of our server is store in the `server.rb` file.
