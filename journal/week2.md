@@ -27,3 +27,15 @@ chmod u+x bin/terratowns/*
 [Sinatra](https://sinatrarb.com/) is a lightweight web framework for Ruby. We use the bundle commanda to install the gems (check the `.gitpod` file). Bundle exec is used to run the server.
 
 All of the code of our server is store in the `server.rb` file.
+
+### Sending Requests
+
+Use the bash scripts inside the `bin` folder to send requests to the server.
+
+```bash
+bin/terratowns/create
+```
+
+### Debugging
+
+You can use `binding.pry` to debug your code. You can then run the server with `bundle exec ruby server.rb` and then send a request to the server.

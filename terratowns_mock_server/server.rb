@@ -114,9 +114,9 @@ class TerraTownsMockServer < Sinatra::Base
     # Create a new home object
     home = Home.new
     home.town = town
+    home.domain_name = domain_name
     home.name = name
     home.description = description
-    home.domain_name = domain_name
     home.content_version = content_version
 
     unless home.valid?
@@ -160,9 +160,15 @@ class TerraTownsMockServer < Sinatra::Base
     ensure_correct_headings
     find_user_by_bearer_token
     puts "# update - PUT /api/homes/:uuid"
+
+    home = Home.new
+    home.town = $home[:town]
+    home.domain_name = $home[:domain_name]
+
     begin
       # Parse JSON payload from the request body
       payload = JSON.parse(request.body.read)
+      puts "payload #{payload}"
     rescue JSON::ParserError
       halt 422, "Malformed JSON"
     end
@@ -170,25 +176,24 @@ class TerraTownsMockServer < Sinatra::Base
     # Validate payload data
     name = payload["name"]
     description = payload["description"]
-    domain_name = payload["domain_name"]
     content_version = payload["content_version"]
-
     unless params[:uuid] == $home[:uuid]
       error 404, "failed to find home with provided uuid and bearer token"
     end
 
-    home = Home.new
-    home.town = $home[:town]
+    puts "name #{name}"
+    puts "description #{description}"
+    puts "content_version #{content_version}"
+
     home.name = name
     home.description = description
-    home.domain_name = domain_name
     home.content_version = content_version
 
     unless home.valid?
       error 422, home.errors.messages.to_json
     end
 
-    return { uuid: params[:uuid] }.to_json
+    return { uuid: params[:uuid], description: home.description }.to_json
   end
 
   # DELETE
@@ -202,8 +207,9 @@ class TerraTownsMockServer < Sinatra::Base
       error 404, "failed to find home with provided uuid and bearer token"
     end
 
+    uuid = $home[:uuid]
     $home = {}
-    { message: "House deleted successfully" }.to_json
+    { uuid: uuid }.to_json
   end
 end
 
