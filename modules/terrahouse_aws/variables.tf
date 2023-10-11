@@ -22,15 +22,15 @@ variable "user_uuid" {
 }
 
 
-variable "bucket_name" {
-  description = "The name of the S3 bucket"
-  type        = string
+#variable "bucket_name" {
+#  description = "The name of the S3 bucket"
+#  type        = string
 
-  validation {
-    condition     = length(var.bucket_name) > 3 && length(var.bucket_name) < 64
-    error_message = "value must be between 3 and 64 characters"
-  }
-}
+#  validation {
+#    condition     = length(var.bucket_name) > 3 && length(var.bucket_name) < 64
+#    error_message = "value must be between 3 and 64 characters"
+#  }
+#}
 
 variable "index_html_filepath" {
   description = "File path to the index HTML file"
