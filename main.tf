@@ -1,13 +1,12 @@
 
 terraform {
-  # commenting it out TF cloud as we are using local state
-  /* cloud {
+  cloud {
     organization = "includeJS"
 
     workspaces {
       name = "terra-house-1"
     }
-  } */
+  }
   required_providers {
     terratowns = {
       source  = "local.providers/local/terratowns"
@@ -21,18 +20,38 @@ provider "terratowns" {
   token     = var.terratowns_access_token
 }
 
-module "terrahouse_aws" {
-  source              = "./modules/terrahouse_aws"
-  user_uuid           = var.user_uuid
-  index_html_filepath = var.index_html_filepath
-  error_html_filepath = var.error_html_filepath
-  content_version     = var.content_version
-  assets_path         = var.assets_path
+module "home_one_hosting" {
+  source          = "./modules/terrahome_aws"
+  user_uuid       = var.user_uuid
+  public_path     = var.home_one.public_path
+  content_version = var.home_one.content_version
 }
-resource "terratowns_home" "home" {
-  name            = "Cooking Galore"
-  domain_name     = module.terrahouse_aws.cloudfront_url
-  description     = "A place to share AMAZINGLY delicious recipes"
+resource "terratowns_home" "home_one" {
+  name            = "Cooking Galore 1"
+  domain_name     = module.home_one_hosting.domain_name
+  description     = "5 Interesting Facts About Greece"
   town            = "missingo"
-  content_version = 1
+  content_version = var.home_one.content_version
+}
+
+module "home_two_hosting" {
+  source          = "./modules/terrahome_aws"
+  user_uuid       = var.user_uuid
+  public_path     = var.home_two.public_path
+  content_version = var.home_two.content_version
+}
+
+resource "terratowns_home" "home_two" {
+  name        = "Green Gem Gourmet"
+  domain_name = module.home_two_hosting.domain_name
+  description = <<EOT
+Welcome to Green Gem Gourmet, your culinary compass for exploring a world of legumes and grains. From the versatile fava pea to a myriad of beans, peas, and grains, we're here to unlock the culinary potential of these nutritious gems.
+
+Join us for a gastronomic journey that celebrates the richness of the plant-based world. Whether you're a seasoned cook or a budding chef, Green Gem Gourmet is your source for delicious recipes, cooking tips, and the latest in the world of legumes and grains.
+
+Dive into the diverse and flavorful world of plant-based delights with us!
+EOT
+
+  town            = "cooker-cove"
+  content_version = var.home_two.content_version
 }
