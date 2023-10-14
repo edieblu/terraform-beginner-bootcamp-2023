@@ -29,7 +29,7 @@ module "home_one_hosting" {
 resource "terratowns_home" "home_one" {
   name            = "Cooking Galore 1"
   domain_name     = module.home_one_hosting.domain_name
-  description     = "A place to share AMAZINGLY delicious recipes"
+  description     = "5 Interesting Facts About Greece"
   town            = "missingo"
   content_version = var.home_one.content_version
 }
@@ -42,9 +42,16 @@ module "home_two_hosting" {
 }
 
 resource "terratowns_home" "home_two" {
-  name            = "Cooking Galore"
-  domain_name     = module.home_two_hosting.domain_name
-  description     = "Fava Peas: The Underrated Gems of the Pea Family"
+  name        = "Green Gem Gourmet"
+  domain_name = module.home_two_hosting.domain_name
+  description = <<EOT
+Welcome to Green Gem Gourmet, your culinary compass for exploring a world of legumes and grains. From the versatile fava pea to a myriad of beans, peas, and grains, we're here to unlock the culinary potential of these nutritious gems.
+
+Join us for a gastronomic journey that celebrates the richness of the plant-based world. Whether you're a seasoned cook or a budding chef, Green Gem Gourmet is your source for delicious recipes, cooking tips, and the latest in the world of legumes and grains.
+
+Dive into the diverse and flavorful world of plant-based delights with us!
+EOT
+
   town            = "cooker-cove"
   content_version = var.home_two.content_version
 }
