@@ -39,3 +39,29 @@ bin/terratowns/create
 ### Debugging
 
 You can use `binding.pry` to debug your code. You can then run the server with `bundle exec ruby server.rb` and then send a request to the server.
+
+### Parsing response JSON
+
+```ruby
+  var responseData map[string]interface{}
+  if err := json.NewDecoder(resp.Body).Decode(&responseData); err != nil {
+	  return diag.FromErr(err)
+}
+```
+
+And then return the error with `diag`
+
+```rb
+return diag.FromErr(fmt.Errorf("failed to update home resource, status_code: %d, status: %s, body %s", resp.StatusCode, resp.Status, responseData))
+```
+
+## Terraform Object Variables
+
+From terraform.tfvars:
+
+```bash
+home_one = {
+  public_path     = "/workspace/terraform-beginner-bootcamp-2023/public/house-one"
+  content_version = 1
+}
+```
